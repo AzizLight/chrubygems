@@ -89,5 +89,25 @@ function chgems --description="Gemsets without RVM"
     eval "$cmd"
   end
 
+  if test -f "$CHGEMS_BASE_LIST"
+    set -l installed_gems (gem list --local --no-versions | sed 's/\*\{3\} LOCAL GEMS \*\{3\}//g')
+    set -l base_gems (/bin/cat "$CHGEMS_BASE_LIST")
+
+    set -l gems_to_install
+    for gem in $base_gems
+      if not contains $gem $installed_gems
+        set gems_to_install $gems_to_install $gem
+      end
+    end
+
+    if test (count $gems_to_install) -gt 0
+      set_color green
+      echo "Installing base gems..."
+      set_color normal
+
+      gem install $gems_to_install
+    end
+  end
+
   /usr/bin/cd "$previous_pwd"
 end
