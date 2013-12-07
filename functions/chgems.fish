@@ -56,9 +56,19 @@ function chgems --description="Gemsets without RVM"
     end
   end
 
-  set fish_user_paths "$gem_dir/bin" $fish_user_paths
+  # Check if the bin directory of the new "gemset" is already in the fish_user_path
+  # This will prevent adding duplicate directories in the fish_user_path
+  if not contains "$gem_dir/bin" $fish_user_paths
+    set fish_user_paths "$gem_dir/bin" $fish_user_paths
+  end
+
   set -gx GEM_HOME $gem_dir
-  set -gx GEM_PATH $gem_dir $chgems_gem_path
+
+  # Check if the new gem directory is already in the GEM_PATH
+  # This will prevent adding duplicate directories in the GEM_PATH
+  if not contains $gem_dir $chgems_gem_path
+    set -gx GEM_PATH $gem_dir $chgems_gem_path
+  end
 
   set_color green
   echo "Gem isolation complete!"
