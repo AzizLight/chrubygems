@@ -10,7 +10,7 @@ function chgems --description="Gemsets without RVM"
     echo "chgems $CHGEMS_VERSION"
     return
   case "-h" "--help"
-    echo "usage: chgems [ROOT [COMMAND [ARGS]...]]"
+    echo "usage: chgems [OPTIONS] [ROOT [COMMAND [ARGS]...]]"
     return
   case "-f" "--force"
     set options $options "__force__"
