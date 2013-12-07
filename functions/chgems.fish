@@ -3,6 +3,8 @@
 function chgems --description="Gemsets without RVM"
   set -gx CHGEMS_VERSION "0.3.4"
 
+  set -l options
+
   switch "$argv[1]"
   case "-V" "--version"
     echo "chgems $CHGEMS_VERSION"
@@ -10,6 +12,9 @@ function chgems --description="Gemsets without RVM"
   case "-h" "--help"
     echo "usage: chgems [ROOT [COMMAND [ARGS]...]]"
     return
+  case "-f" "--force"
+    set options $options "__force__"
+    set -e argv[1]
   end
 
   set -l root
@@ -47,6 +52,19 @@ function chgems --description="Gemsets without RVM"
   set -l chgems_gem_path (eval "$gem_path_cmd")
 
   set -l gem_dir "$root/.gem/$chgems_ruby_engine/$chgems_ruby_version"
+
+  if contains "__force__" $options
+    if test -d "$root/.gem"
+      read --local --prompt="set_color yellow; echo 'Are you sure that you want to remove ALL gems installed in this project?'; echo -n '(Type \'yes\' to confirm) '; set_color normal" force_check
+      if test $force_check = "yes"
+        set_color red
+        echo "Removing ALL existing isolated gems..."
+        set_color normal
+
+        /bin/rm -rf "$root/.gem" > /dev/null
+      end
+    end
+  end
 
   if not test -d "$gemdir"
     set -l gem_bin_folder_path "$root"
