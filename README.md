@@ -16,7 +16,7 @@ First, clone the repository in your home directory:
 Next, source the `init` script from you `config.fish` file:
 
 ```
-% . $HOME/.chrubygems/init.fish
+. $HOME/.chrubygems/init.fish
 ```
 
 *NOTE: You can put the `chrubygems` directory wherever you want.*
