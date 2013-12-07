@@ -40,6 +40,8 @@ set -gx CHGEMS_GLOBAL_GEMS "$HOME/.chgems_global_gems"
 
 Now everytime you run `chgems`, it will install the global gems (unless they are already installed).
 
+*NOTE: The name of the global gems list file is not important.*
+
 Credits
 -------
 
