@@ -40,7 +40,7 @@ function chgems --description="Gemsets without RVM"
 
   set -l ruby_engine_cmd "ruby -e \"puts defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'ruby'\""
   set -l ruby_version_cmd "ruby -e \"puts RUBY_VERSION\""
-  set -l gem_path_cmd "ruby -e \"puts Gem.path.map { |p| '\\\"' + p + '\\\"' }.join(' ')\""
+  set -l gem_path_cmd "ruby -e \"Gem.path.each { |directory| puts directory }\""
 
   set -l chgems_ruby_engine (eval "$ruby_engine_cmd")
   set -l chgems_ruby_version (eval "$ruby_version_cmd")
