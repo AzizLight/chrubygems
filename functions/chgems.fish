@@ -16,7 +16,12 @@ function chgems --description="Gemsets without RVM"
   set -l cmd
 
   if test (count $argv) -gt 0
-    set root $argv[1]
+    set root (ruby -e "print File.expand_path('$argv[1]')")
+
+    if not test -d "$root"
+      echo "chgems: The directory '$root' does not exist"
+      return 1
+    end
 
     if test (count $argv) -gt 1
       set -e argv[1]
@@ -28,10 +33,8 @@ function chgems --description="Gemsets without RVM"
     set cmd ""
   end
 
-  if not test -d "$root"
-    echo "chgems: cannot use $root as a gem dir: No such directory"
-    return 1
-  end
+  # Cache the $PWD
+  set -l previous_pwd "$PWD"
 
   /usr/bin/cd "$root"
 
@@ -43,9 +46,9 @@ function chgems --description="Gemsets without RVM"
   set -l chgems_ruby_version (eval "$ruby_version_cmd")
   set -l chgems_gem_path (eval "$gem_path_cmd")
 
-  set -l gem_dir "$PWD/.gem/$chgems_ruby_engine/$chgems_ruby_version"
+  set -l gem_dir "$root/.gem/$chgems_ruby_engine/$chgems_ruby_version"
 
-  set -l gem_bin_folder_path "$PWD"
+  set -l gem_bin_folder_path "$root"
   for dir in ".gem" "$chgems_ruby_engine" "$chgems_ruby_version" "bin"
     set gem_bin_folder_path "$gem_bin_folder_path/$dir"
     if not test -d "$gem_bin_folder_path"
@@ -68,4 +71,6 @@ function chgems --description="Gemsets without RVM"
 
     eval "$cmd"
   end
+
+  /usr/bin/cd "$previous_pwd"
 end
