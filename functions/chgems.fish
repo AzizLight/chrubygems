@@ -81,14 +81,6 @@ function chgems --description="Gemsets without RVM"
   echo "Gem isolation complete!"
   set_color normal
 
-  if test -n "$cmd"
-    set_color green
-    echo "Running `$cmd` ..."
-    set_color normal
-
-    eval "$cmd"
-  end
-
   if test -f "$CHGEMS_GLOBAL_GEMS"
     set -l installed_gems (gem list --local --no-versions | sed 's/\*\{3\} LOCAL GEMS \*\{3\}//g')
     set -l base_gems (/bin/cat "$CHGEMS_GLOBAL_GEMS")
@@ -107,6 +99,14 @@ function chgems --description="Gemsets without RVM"
 
       gem install $gems_to_install
     end
+  end
+
+  if test -n "$cmd"
+    set_color green
+    echo "Running `$cmd` ..."
+    set_color normal
+
+    eval "$cmd"
   end
 
   /usr/bin/cd "$previous_pwd"
