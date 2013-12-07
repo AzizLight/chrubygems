@@ -19,6 +19,8 @@ Next, source the `init` script from you `config.fish` file:
 % . $HOME/.chrubygems/init.fish
 ```
 
+***NOTE:** You can put the `chrubygems` directory wherever you want.*
+
 Credits
 -------
 

@@ -5,7 +5,6 @@
 #  \___|_| |_|_|   \__,_|_.__/ \__, |\__, |\___|_| |_| |_|___/
 #                              |___/ |___/
 #
+set -gx CHRUBYGEMS_DIR (dirname (status --current-filename))
 
-set -gx CHRUBYGEMS_DIR $HOME/.chrubygems
-
-set fish_function_path $CHRUBYGEMS_DIR/functions $fish_function_path
+set fish_function_path "$CHRUBYGEMS_DIR/functions" $fish_function_path
