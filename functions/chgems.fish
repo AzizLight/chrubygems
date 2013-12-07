@@ -48,11 +48,13 @@ function chgems --description="Gemsets without RVM"
 
   set -l gem_dir "$root/.gem/$chgems_ruby_engine/$chgems_ruby_version"
 
-  set -l gem_bin_folder_path "$root"
-  for dir in ".gem" "$chgems_ruby_engine" "$chgems_ruby_version" "bin"
-    set gem_bin_folder_path "$gem_bin_folder_path/$dir"
-    if not test -d "$gem_bin_folder_path"
-      /bin/mkdir -p "$gem_bin_folder_path"
+  if not test -d "$gemdir"
+    set -l gem_bin_folder_path "$root"
+    for dir in ".gem" "$chgems_ruby_engine" "$chgems_ruby_version" "bin"
+      set gem_bin_folder_path "$gem_bin_folder_path/$dir"
+      if not test -d "$gem_bin_folder_path"
+        /bin/mkdir -p "$gem_bin_folder_path"
+      end
     end
   end
 
