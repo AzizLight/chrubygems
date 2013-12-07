@@ -1,7 +1,7 @@
 #!/usr/local/bin/fish
 
 function chgems --description="Gemsets without RVM"
-  set -gx CHGEMS_VERSION "0.3.3"
+  set -gx CHGEMS_VERSION "0.3.4"
 
   switch "$argv[1]"
   case "-V" "--version"
