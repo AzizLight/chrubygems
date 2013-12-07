@@ -24,18 +24,18 @@ Next, source the `init` script from you `config.fish` file:
 Global gems
 -----------
 
-It is possible to have "global" gems. Those gems will be installed automatically by `chgems` in each new project. You need to create a file with names of gems to install (one per line), and tell `chgems` where that file is by adding the path to the file to the `CHGEMS_BASE_LIST` environment variable.
+It is possible to have "global" gems. Those gems will be installed automatically by `chgems` in each new project. You need to create a file with names of gems to install (one per line), and tell `chgems` where that file is by adding the path to the file to the `CHGEMS_GLOBAL_GEMS` environment variable.
 
-There is an example file in this repository, called [`chgems_base.exaple`](https://github.com/AzizLight/chrubygems/blob/master/chgems_base.example). You can copy it anywhere you want and store it location in the environment variable. For example, copy the file to your home directory:
+There is an example file in this repository, called [`chgems_global_gems.example`](https://github.com/AzizLight/chrubygems/blob/master/chgems_global_gems.example). You can copy it anywhere you want and store it location in the environment variable. For example, copy the file to your home directory:
 
 ```
-% cp $CHRUBYGEMS_DIR/chgems_base.example $HOME/.chgems_base
+% cp $CHRUBYGEMS_DIR/chgems_global_gems.example $HOME/.chgems_global_gems
 ```
 
 And then add the following line to you Fish config file (`config.fish`):
 
 ```
-set -gx CHGEMS_BASE_LIST "$HOME/.chgems_base"
+set -gx CHGEMS_GLOBAL_GEMS "$HOME/.chgems_global_gems"
 ```
 
 Now everytime you run `chgems`, it will install the global gems (unless they are already installed).

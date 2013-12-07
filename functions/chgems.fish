@@ -89,9 +89,9 @@ function chgems --description="Gemsets without RVM"
     eval "$cmd"
   end
 
-  if test -f "$CHGEMS_BASE_LIST"
+  if test -f "$CHGEMS_GLOBAL_GEMS"
     set -l installed_gems (gem list --local --no-versions | sed 's/\*\{3\} LOCAL GEMS \*\{3\}//g')
-    set -l base_gems (/bin/cat "$CHGEMS_BASE_LIST")
+    set -l base_gems (/bin/cat "$CHGEMS_GLOBAL_GEMS")
 
     set -l gems_to_install
     for gem in $base_gems
