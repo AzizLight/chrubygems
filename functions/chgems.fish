@@ -41,7 +41,7 @@ function chgems --description="Gemsets without RVM"
   # Cache the $PWD
   set -l previous_pwd "$PWD"
 
-  /usr/bin/cd "$root"
+  builtin cd "$root"
 
   set -l ruby_engine_cmd "ruby -e \"puts defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'ruby'\""
   set -l ruby_version_cmd "ruby -e \"puts RUBY_VERSION\""
@@ -61,7 +61,7 @@ function chgems --description="Gemsets without RVM"
         echo "Removing ALL existing isolated gems..."
         set_color normal
 
-        /bin/rm -rf "$root/.gem" > /dev/null
+        command rm -rf "$root/.gem" > /dev/null
       end
     end
   end
@@ -71,7 +71,7 @@ function chgems --description="Gemsets without RVM"
     for dir in ".gem" "$chgems_ruby_engine" "$chgems_ruby_version" "bin"
       set gem_bin_folder_path "$gem_bin_folder_path/$dir"
       if not test -d "$gem_bin_folder_path"
-        /bin/mkdir -p "$gem_bin_folder_path"
+        command mkdir -p "$gem_bin_folder_path"
       end
     end
   end
@@ -103,7 +103,7 @@ function chgems --description="Gemsets without RVM"
 
   if test -f "$CHGEMS_GLOBAL_GEMS"
     set -l installed_gems (gem list --local --no-versions | sed 's/\*\{3\} LOCAL GEMS \*\{3\}//g')
-    set -l base_gems (/bin/cat "$CHGEMS_GLOBAL_GEMS")
+    set -l base_gems (command cat "$CHGEMS_GLOBAL_GEMS")
 
     set -l gems_to_install
     for gem in $base_gems
@@ -129,5 +129,5 @@ function chgems --description="Gemsets without RVM"
     eval "$cmd"
   end
 
-  /usr/bin/cd "$previous_pwd"
+  builtin cd "$previous_pwd"
 end
