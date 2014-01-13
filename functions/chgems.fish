@@ -84,16 +84,16 @@ function chgems --description="Gemsets without RVM"
 
   set -gx GEM_HOME $gem_dir
 
+  # Cache the default GEM_PATH if it is not already cached
+  # This will make it possible to have only one "gemset"
+  # active at a time
+  if test (count $DEFAULT_GEM_PATH) -eq 0
+    set -gx DEFAULT_GEM_PATH $chgems_gem_path
+  end
+
   # Check if the new gem directory is already in the GEM_PATH
   # This will prevent adding duplicate directories in the GEM_PATH
   if not contains $gem_dir $chgems_gem_path
-    # Cache the default GEM_PATH if it is not already cached
-    # This will make it possible to have only one "gemset"
-    # active at a time
-    if test (count $DEFAULT_GEM_PATH) -eq 0
-      set -gx DEFAULT_GEM_PATH $chgems_gem_path
-    end
-
     set -gx GEM_PATH $gem_dir $DEFAULT_GEM_PATH
   end
 
