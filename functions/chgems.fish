@@ -91,6 +91,14 @@ function chgems --description="Gemsets without RVM"
     set -gx DEFAULT_GEM_PATH $chgems_gem_path
   end
 
+  # When going to the home directory (which is not a project), switch
+  # to the global "gemset" to achieve true gem isolation. Otherwise,
+  # when going out of a project to the home directory, the gems from
+  # the project will still be available.
+  if test (count (echo $gem_dir | command grep "$PWD/.gem")) -gt 0
+    set -gx GEM_PATH $DEFAULT_GEM_PATH
+  end
+
   # Check if the new gem directory is already in the GEM_PATH
   # This will prevent adding duplicate directories in the GEM_PATH
   if not contains $gem_dir $chgems_gem_path
